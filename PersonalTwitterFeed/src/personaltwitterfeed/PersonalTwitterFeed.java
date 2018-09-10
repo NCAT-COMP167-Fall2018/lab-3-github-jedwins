@@ -5,6 +5,8 @@
  */
 package personaltwitterfeed;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -14,6 +16,16 @@ import java.util.Scanner;
 public class PersonalTwitterFeed {
 
     private static int MAX_NUMBER_TWEETS = 200;
+    
+    public static String getCurrentTimeStamp(){
+        String pattern = "dd-MM-yy HH::mm::ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        
+        String date = simpleDateFormat.format(new Date());
+            
+        date = date.substring(0, date.indexOf(" ")) + " at" + date.substring(date.indexOf(" "));
+        return date;
+    }
     
     /**
      * @param args the command line arguments
@@ -32,7 +44,7 @@ public class PersonalTwitterFeed {
         int numTweets = 0;
         
         while(numTweets < (MAX_NUMBER_TWEETS - 1)) {
-            tweets[numTweets] = keyboard.nextLine();
+            tweets[numTweets] =  "\"" + keyboard.nextLine() + "\" on " + getCurrentTimeStamp();
             numTweets++;
             
             System.out.println(tweeterName + "'s Personal Twitter Feed:");
