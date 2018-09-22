@@ -5,6 +5,8 @@
  */
 package personaltwitterfeed;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -15,16 +17,21 @@ public class PersonalTwitterFeed {
 
     private static int MAX_NUMBER_TWEETS = 200;
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        String[] tweets = new String[MAX_NUMBER_TWEETS];
-        Scanner keyboard = new Scanner(System.in);
+    public static String getCurrentTimeStamp(){
+        String pattern = "dd-MM-yy HH::mm::ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        
+        String date = simpleDateFormat.format(new Date());
+            
+        date = date.substring(0, date.indexOf(" ")) + " at" + date.substring(date.indexOf(" "));
+        return date;
+    }
+    
+    public static void newTweet(String[] vTweets, Scanner vKeyboard){
         System.out.println("Welcome to your personal Twitter!");
         System.out.println("What's your name, tweeter?");
         
-        String tweeterName = keyboard.nextLine();
+        String tweeterName = vKeyboard.nextLine();
         
         System.out.println("Nice to meet you " + tweeterName + "!");
         System.out.println("Enter your tweets and I will add them to your timeline!");
@@ -32,12 +39,12 @@ public class PersonalTwitterFeed {
         int numTweets = 0;
         
         while(numTweets < (MAX_NUMBER_TWEETS - 1)) {
-            tweets[numTweets] = keyboard.nextLine();
+            vTweets[numTweets] =  "\"" + vKeyboard.nextLine() + "\" on " + getCurrentTimeStamp();
             numTweets++;
             
             System.out.println(tweeterName + "'s Personal Twitter Feed:");
             for(int i = 0; i < numTweets; i++) {
-                System.out.println("- " + tweets[i]);
+                System.out.println("- " + vTweets[i]);
             }
             
             System.out.println();
@@ -50,6 +57,16 @@ public class PersonalTwitterFeed {
         }
         
         System.out.println("Your twitter feed is full");
+    }
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        String[] tweets = new String[MAX_NUMBER_TWEETS];
+        Scanner keyboard = new Scanner(System.in);
+        
+        newTweet(tweets, keyboard);
     }
     
 }
